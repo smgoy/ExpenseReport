@@ -6,8 +6,13 @@ function createUser (req, res) {
     password: req.body.password
   });
 
-  user.save().then(function() {
+  user.save()
+  .then(function() {
     res.json(user);
+  })
+  .catch(function(error) {
+    res.status(422);
+    res.json(error);
   });
 }
 

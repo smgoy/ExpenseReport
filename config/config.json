@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": null,
-    "database": "expense_report_development",
+    "database": "expensereport_development",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "port": 5432
@@ -10,7 +10,7 @@
   "test": {
     "username": "postgres",
     "password": null,
-    "database": "expense_report_test",
+    "database": "expensereport_test",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "port": 5432
@@ -18,7 +18,7 @@
   "production": {
     "username": "postgres",
     "password": null,
-    "database": "expense_report_production",
+    "database": "expensereport_production",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "port": 5432
