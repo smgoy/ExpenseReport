@@ -3,7 +3,7 @@
 module.exports = function(sequelize, DataTypes) {
   var Expense = sequelize.define('Expense', {
     date: {
-      type: DataTypes.DATETIME,
+      type: DataTypes.DATE,
       allowNull: false
     },
     amount: {
@@ -14,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        Expense.belongsTo(models.User);
+        // associations can be defined here
       }
     }
   });
