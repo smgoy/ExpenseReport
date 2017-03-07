@@ -4,7 +4,10 @@ import { receiveUser } from '../actions/user_actions';
 import { login } from '../util/login';
 
 const LoginMiddleware = ({dispatch}) => next => action => {
-  const successCallback = user => dispatch(receiveUser(user));
+  const successCallback = data => {
+    dispatch(receiveUser(data.user));
+    localStorage.setItem('token', data.token);
+  };
   const errorCallback = e => {
     const errors = e.responseJSON;
     dispatch(receiveErrors(errors));

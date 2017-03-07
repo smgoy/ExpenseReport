@@ -1,15 +1,11 @@
-import Ajax from 'simple-ajax';
+import axios from 'axios';
 
 export const login = (userCredentials, success, error) => {
-  const ajax = new Ajax({
-    url: `api/login`,
-    method: 'POST',
-    dataType: 'json',
-    data: userCredentials
-  });
-
-  ajax.on('success', success);
-  ajax.on('error', error);
-
-  ajax.send();
+  axios.post('/api/login', userCredentials)
+    .then(function(response) {
+      success(response.data);
+    })
+    .catch(function(err) {
+      error(err);
+    });
 };

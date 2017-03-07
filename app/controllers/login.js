@@ -15,7 +15,11 @@ module.exports = function (req, res, next) {
         };
         var token = jwt.encode(payload, config.jwtSecret);
         res.json({
-            token: 'JWT ' + token
+            token: 'JWT ' + token,
+            user: {
+              username: user.username,
+              admin: user.admin
+            }
         });
       } else {
         res.sendStatus(401);

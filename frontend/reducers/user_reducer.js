@@ -8,8 +8,8 @@ const UserReducer = (state = _nullUser, action) => {
   switch (action.type) {
     case userConstants.RECEIVE_USER:
       return {
-        username: action.username,
-        admin: action.admin,
+        username: action.user.username,
+        admin: action.user.admin,
         loggedIn: true
       };
     default:
