@@ -10,8 +10,10 @@ class LoginForm extends React.Component {
   render() {
     return (
       <form className='login-form'>
-        <TextField />
-        <TextField />
+        <TextField
+          floatingLabelText="Username" />
+        <TextField
+          floatingLabelText="Password" />
         <RaisedButton label="Login" />
       </form>
     );
