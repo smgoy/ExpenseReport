@@ -35,6 +35,7 @@ class LoginForm extends React.Component {
           onChange={this.updateField.bind(this, 'pass')} />
         <Link to='/expenses'><RaisedButton
           label="Login"
+          type='password'
           onClick={this.handleClick.bind(this)} /></Link>
       </form>
     );

@@ -4,10 +4,23 @@ import { Table, TableBody, TableHeader,
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import ExpenseRow from './expense_row';
+import NewExpense from './new_expense';
 
 class ExpenseTable extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      expenseFormOpen: false
+    };
+  }
+
   componentWillMount() {
     this.props.requestExpenses();
+  }
+
+  toggleEventForm() {
+    const status = !this.state.expenseFormOpen;
+    this.setState({expenseFormOpen: status});
   }
 
   render () {
@@ -34,10 +47,13 @@ class ExpenseTable extends React.Component {
         </Table>
         <div className='add-expense'>
           <p className='add-expense-text'>Add an Expense</p>
-          <FloatingActionButton>
+          <FloatingActionButton onClick={this.toggleEventForm.bind(this)}>
             <ContentAdd />
           </FloatingActionButton>
         </div>
+        <NewExpense
+          open={this.state.expenseFormOpen}
+          toggleEventForm={this.toggleEventForm.bind(this)} />
       </div>
     );
   }
