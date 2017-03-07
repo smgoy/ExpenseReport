@@ -10,11 +10,15 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.FLOAT,
       allowNull: false
     },
-    description: DataTypes.TEXT
+    description: DataTypes.TEXT,
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
   }, {
     classMethods: {
       associate: function(models) {
-        Expense.belongsTo(models.User);
+        // associations can be defined here
       }
     }
   });

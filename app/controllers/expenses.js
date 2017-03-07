@@ -1,5 +1,14 @@
 var Expense = require('../models').Expense;
 
+function getExpenses (req, res, next) {
+  console.log('here');
+  Expense.findAll()
+  .then(function(expenses) {
+    res.json(expenses);
+  })
+  .catch(next);
+}
+
 function createExpense (req, res) {
   var expense = Expense.build({
     date: req.body.date,
@@ -19,5 +28,6 @@ function createExpense (req, res) {
 }
 
 module.exports = {
-  createExpense
+  createExpense,
+  getExpenses
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
@@ -32,9 +33,9 @@ class LoginForm extends React.Component {
         <TextField
           floatingLabelText="Password"
           onChange={this.updateField.bind(this, 'pass')} />
-        <RaisedButton
+        <Link to='/expenses'><RaisedButton
           label="Login"
-          onClick={this.handleClick.bind(this)} />
+          onClick={this.handleClick.bind(this)} /></Link>
       </form>
     );
   }
