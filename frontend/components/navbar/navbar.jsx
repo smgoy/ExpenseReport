@@ -3,21 +3,22 @@ import { Link, hashHistory } from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 
-const Navbar = ({user}) => {
+const Navbar = () => {
 
-  let navbarButtons;
+  let navbarButtons = [];
 
-  if (user.loggedIn && user.admin) {
-    navbarButtons = [];
-  }
-  else if (user.loggedIn) {
-    navbarButtons = [];
-  }
+  // if (user.loggedIn && user.admin) {
+  //   navbarButtons = [];
+  // }
+  // else if (user.loggedIn) {
+  //   navbarButtons = [];
+  // } else {
+  //   navbarButtons = [];
+  // }
 
   return (
     <AppBar
-      title = 'Expense Report'
-      iconElementRight={navbarButtons} />
+      title = 'Expense Report' />
   );
 };
 
