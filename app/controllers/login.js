@@ -18,7 +18,8 @@ module.exports = function (req, res, next) {
             token: 'JWT ' + token,
             user: {
               username: user.username,
-              admin: user.admin
+              admin: user.admin,
+              id: user.id
             }
         });
       } else {

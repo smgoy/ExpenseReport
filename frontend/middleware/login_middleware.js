@@ -7,6 +7,7 @@ const LoginMiddleware = ({dispatch}) => next => action => {
   const successCallback = data => {
     dispatch(receiveUser(data.user));
     localStorage.setItem('token', data.token);
+    localStorage.setItem('currentUser', JSON.stringify(data.user));
   };
   const errorCallback = e => {
     const errors = e.responseJSON;

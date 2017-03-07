@@ -16,6 +16,18 @@ function createUser (req, res) {
   });
 }
 
+function getUser (req, res, next) {
+  User.findById(req.params.id)
+  .then(function(user) {
+    res.json({
+      username: user.dataValues.username,
+      admin: user.dataValues.admin
+    });
+  })
+  .catch(next);
+}
+
 module.exports = {
-  createUser
+  createUser,
+  getUser
 };

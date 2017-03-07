@@ -10,7 +10,7 @@ function generateSecret() {
 
 
 module.exports = {
-    jwtSecret: generateSecret(),
+    jwtSecret: 'heLLoKiTTy',
     jwtSession: {
         session: false
     }

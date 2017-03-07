@@ -7,7 +7,21 @@ import configureStore from './store/store';
 injectTapEventPlugin();
 
 document.addEventListener('DOMContentLoaded', () => {
-  let store = configureStore();
+  let store;
+  let currentUser = localStorage.getItem('currentUser');
+  if (currentUser) {
+    currentUser = JSON.parse(currentUser);
+    const initialState = {
+      user: {
+        loggedIn: true,
+        username: currentUser.username,
+        admin: currentUser.admin
+      }
+    };
+    store = configureStore(initialState);
+  } else {
+    store = configureStore();
+  }
 
   const root = document.getElementById('root');
   ReactDOM.render(<Root store={store}/>, root);
