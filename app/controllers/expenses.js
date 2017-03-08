@@ -10,15 +10,23 @@ function getExpenses (req, res, next) {
 }
 
 function createExpense (req, res) {
+  console.log({
+    date: req.body.date,
+    amount: req.body.amount,
+    description: req.body.description,
+    userId: req.body.userId
+  });
+
   var expense = Expense.build({
     date: req.body.date,
     amount: req.body.amount,
-    description: req.body.description
+    description: req.body.description,
+    userId: req.body.userId
   });
 
   expense.save()
   .then(function() {
-    res.json(expense);
+    res.json([expense]);
   })
   .catch(function(error) {
     res.status(422);

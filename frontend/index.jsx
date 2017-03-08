@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import Root from './components/root';
 import configureStore from './store/store';
+var jwt = require('jwt-simple');
 
 injectTapEventPlugin();
 
@@ -15,7 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
       user: {
         loggedIn: true,
         username: currentUser.username,
-        admin: currentUser.admin
+        admin: currentUser.admin,
+        id: currentUser.id
       }
     };
     store = configureStore(initialState);

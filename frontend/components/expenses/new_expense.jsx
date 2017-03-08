@@ -13,7 +13,8 @@ class NewExpense extends React.Component {
     this.state = {
       date: '',
       amount: '',
-      description: ''
+      description: '',
+      userId: props.userId
     };
   }
 
@@ -27,7 +28,7 @@ class NewExpense extends React.Component {
   }
 
   handleSubmit() {
-    this.props.toggleEventForm();
+    this.props.createExpense(this.state, this.props.toggleEventForm);
   }
 
   render() {
@@ -60,7 +61,6 @@ class NewExpense extends React.Component {
             onChange={this.updateField.bind(this, 'date')} />
           <TextField
             floatingLabelText="Expense Amount"
-            value={this.state.amount}
             onChange={this.updateField.bind(this, 'amount')} />
           <TextField
             floatingLabelText="Description"
@@ -74,4 +74,15 @@ class NewExpense extends React.Component {
   }
 }
 
-export default NewExpense;
+import { connect } from 'react-redux';
+import { createExpense } from '../../actions/expense_actions';
+
+const mapStateToProps = state => ({
+  userId: state.user.id
+});
+
+const mapDispatchToProps = dispatch => ({
+  createExpense: (expense, toggleForm) => dispatch(createExpense(expense, toggleForm))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewExpense);

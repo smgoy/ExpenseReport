@@ -12,3 +12,13 @@ export const requestExpenses = (success) => {
       success(response.data);
     });
 };
+
+export const createExpense = (expense, success, error) => {
+  instance.post(`/api/expenses`, expense)
+    .then(function(response) {
+      success(response.data);
+    })
+    .catch(function(err) {
+      error(err);
+    });
+};
