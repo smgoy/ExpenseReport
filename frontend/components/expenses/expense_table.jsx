@@ -39,6 +39,7 @@ class ExpenseTable extends React.Component {
               <TableHeaderColumn>Date</TableHeaderColumn>
               <TableHeaderColumn>Amount</TableHeaderColumn>
               <TableHeaderColumn>Description</TableHeaderColumn>
+              <TableHeaderColumn>Edit | Delete</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
