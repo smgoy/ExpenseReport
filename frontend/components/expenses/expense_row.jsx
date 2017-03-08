@@ -10,7 +10,7 @@ class ExpenseRow extends React.Component {
   }
 
   handleDelete(expenseId) {
-    debugger;
+    this.props.deleteExpense(expenseId);
   }
 
   render() {
@@ -29,4 +29,15 @@ class ExpenseRow extends React.Component {
   }
 }
 
-export default ExpenseRow;
+import { connect } from 'react-redux';
+import { deleteExpense } from '../../actions/expense_actions';
+
+// const mapStateToProps = state => ({
+//   user: state.user
+// });
+
+const mapDispatchToProps = dispatch => ({
+  deleteExpense: expenseId => dispatch(deleteExpense(expenseId))
+});
+
+export default connect(null, mapDispatchToProps)(ExpenseRow);
