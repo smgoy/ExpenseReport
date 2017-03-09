@@ -1,10 +1,12 @@
 import { expenseConstants,
          receiveExpenses,
          receiveExpense,
-         removeExpense } from '../actions/expense_actions';
+         removeExpense,
+         updateExpenses } from '../actions/expense_actions';
 import { requestExpenses,
          createExpense,
-         deleteExpense } from '../util/expense';
+         deleteExpense,
+         editExpense } from '../util/expense';
 import { receiveErrors } from '../actions/error_actions';
 
 const ExpenseMiddleware = ({dispatch}) => next => action => {
@@ -22,6 +24,13 @@ const ExpenseMiddleware = ({dispatch}) => next => action => {
         action.toggleForm();
       };
       createExpense(action.expense, successCallback, errorCallback);
+      return next(action);
+    case expenseConstants.EDIT_EXPENSE:
+      successCallback = expense => {
+        dispatch(updateExpenses(expense));
+        action.toggleForm();
+      };
+      editExpense(action.expense, successCallback, errorCallback);
       return next(action);
     case expenseConstants.DELETE_EXPENSE:
       successCallback = expenseId => dispatch(removeExpense(expenseId));

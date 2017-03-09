@@ -23,6 +23,16 @@ export const createExpense = (expense, success, error) => {
     });
 };
 
+export const editExpense = (expense, success, error) => {
+  instance.patch(`/api/expenses/${expense.expenseId}`, expense)
+    .then(function(response) {
+      success(response.data);
+    })
+    .catch(function(err) {
+      error(err);
+    });
+};
+
 export const deleteExpense = (expenseId, success) => {
   instance.delete(`/api/expenses/${expenseId}`)
     .then(function(response) {

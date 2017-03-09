@@ -14,7 +14,8 @@ class ExpenseForm extends React.Component {
       date: new Date(),
       amount: '',
       description: '',
-      userId: props.userId
+      userId: props.userId,
+      expenseId: null
     };
   }
 
@@ -31,7 +32,8 @@ class ExpenseForm extends React.Component {
       this.setState({
         date: new Date(nextProps.expenseToEdit.date),
         amount: nextProps.expenseToEdit.amount,
-        description: nextProps.expenseToEdit.description
+        description: nextProps.expenseToEdit.description,
+        expenseId: nextProps.expenseToEdit.id
       });
     }
   }
@@ -49,7 +51,7 @@ class ExpenseForm extends React.Component {
     if (this.props.formType === 'new')
       this.props.createExpense(this.state, this.props.toggleEventForm);
     else if (this.props.formType === 'edit')
-      console.log('edit action here');
+      this.props.editExpense(this.state, this.props.toggleEventForm);
   }
 
   render() {
@@ -100,14 +102,15 @@ class ExpenseForm extends React.Component {
 }
 
 import { connect } from 'react-redux';
-import { createExpense } from '../../actions/expense_actions';
+import { createExpense, editExpense } from '../../actions/expense_actions';
 
 const mapStateToProps = state => ({
   userId: state.user.id
 });
 
 const mapDispatchToProps = dispatch => ({
-  createExpense: (expense, toggleForm) => dispatch(createExpense(expense, toggleForm))
+  createExpense: (expense, toggleForm) => dispatch(createExpense(expense, toggleForm)),
+  editExpense: (expense, toggleForm) => dispatch(editExpense(expense, toggleForm))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);

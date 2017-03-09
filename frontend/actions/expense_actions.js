@@ -29,9 +29,10 @@ export const receiveExpense = expense => ({
   expense
 });
 
-export const editExpense = expense => ({
+export const editExpense = (expense, toggleForm) => ({
   type: expenseConstants.EDIT_EXPENSE,
-  expense
+  expense,
+  toggleForm
 });
 
 export const updateExpenses = expense => ({

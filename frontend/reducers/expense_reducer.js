@@ -12,9 +12,14 @@ const ExpenseReducer = (state = [], action) => {
       return action.expenses;
     case expenseConstants.RECEIVE_EXPENSE:
       return state.concat(action.expense);
+    case expenseConstants.UPDATE_EXPENSES:
+      const indexToEdit = findIndex(state, action.expense.id);
+      const newState = state.slice();
+      newState[indexToEdit] = action.expense;
+      return newState;
     case expenseConstants.REMOVE_EXPENSE:
-        const indexToRemove = findIndex(state, action.expenseId);
-        return state.splice(0, indexToRemove).concat(state.splice(indexToRemove + 1, state.length));
+      const indexToRemove = findIndex(state, action.expenseId);
+      return state.slice(0, indexToRemove).concat(state.slice(indexToRemove + 1, state.length));
     default:
       return state;
   }
