@@ -3,23 +3,38 @@ import { Link, hashHistory } from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 
-const Navbar = () => {
+const Navbar = ({loggedIn, admin, logoutUser}) => {
 
-  let navbarButtons = [];
+  const logout = () => {
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('token');
+    logoutUser();
+  };
 
-  // if (user.loggedIn && user.admin) {
-  //   navbarButtons = [];
-  // }
-  // else if (user.loggedIn) {
-  //   navbarButtons = [];
-  // } else {
-  //   navbarButtons = [];
-  // }
+  let logoutButton;
+
+  if (loggedIn) {
+    logoutButton = <FlatButton label='Logout' onClick={logout} />;
+  }
 
   return (
     <AppBar
-      title = 'Expense Report' />
+      title = 'Expense Report'
+      iconElementLeft={null}
+      iconElementRight={logoutButton} />
   );
 };
 
-export default Navbar;
+import { connect } from 'react-redux';
+import { logout } from '../../actions/login_actions';
+
+const mapStateToProps = state => ({
+  loggedIn: state.user.loggedIn,
+  admin: state.user.admin
+});
+
+const mapDispatchToProps = dispatch => ({
+  logoutUser: () => dispatch(logout())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
