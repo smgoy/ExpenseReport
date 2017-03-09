@@ -5,10 +5,6 @@ import numeral from 'numeral';
 import moment from 'moment';
 
 class ExpenseRow extends React.Component {
-  handleEdit(expenseId) {
-    debugger;
-  }
-
   handleDelete(expenseId) {
     this.props.deleteExpense(expenseId);
   }
@@ -22,7 +18,7 @@ class ExpenseRow extends React.Component {
         <TableRowColumn>{'$' + numeral(expense.amount).format('0,0.00').toString()}</TableRowColumn>
         <TableRowColumn>{expense.description}</TableRowColumn>
         <TableRowColumn>
-          <a onClick={this.handleEdit.bind(this, expense.id)}>Edit</a> | <a onClick={this.handleDelete.bind(this, expense.id)}>Delete</a>
+          <a onClick={this.props.toggleEventForm}>Edit</a> | <a onClick={this.handleDelete.bind(this, expense.id)}>Delete</a>
         </TableRowColumn>
       </TableRow>
     );

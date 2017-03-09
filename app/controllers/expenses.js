@@ -1,6 +1,6 @@
 var Expense = require('../models').Expense;
 
-function getExpenses (req, res, next) {
+function getExpenses(req, res, next) {
   Expense.findAll()
   .then(function(expenses) {
     res.json(expenses);
@@ -8,7 +8,7 @@ function getExpenses (req, res, next) {
   .catch(next);
 }
 
-function createExpense (req, res) {
+function createExpense(req, res) {
   var expense = Expense.build({
     date: req.body.date,
     amount: req.body.amount,
@@ -27,7 +27,26 @@ function createExpense (req, res) {
 
 }
 
-function deleteExpense (req, res) {
+function editExpense(req, res, next) {
+  Expense.findById(req.params.id)
+  .then(function(expense) {
+    expense.update({
+      date: req.body.date,
+      amount: req.body.amount,
+      description: req.body.description
+    })
+    .then(function(updatedExpense) {
+      res.json(updatedExpense);
+    })
+    .catch(function(error) {
+      res.status(422);
+      res.json(error);
+    });
+  })
+  .catch(next);
+}
+
+function deleteExpense(req, res) {
   var expenseToDestroy = req.params.id;
   Expense.findById(expenseToDestroy)
   .then(function(expense) {
@@ -41,5 +60,6 @@ function deleteExpense (req, res) {
 module.exports = {
   createExpense,
   getExpenses,
+  editExpense,
   deleteExpense
 };

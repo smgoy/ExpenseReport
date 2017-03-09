@@ -4,18 +4,36 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import numeral from 'numeral';
+import moment from 'moment';
 
 
-class NewExpense extends React.Component {
+class ExpenseForm extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      date: '',
+      date: new Date(),
       amount: '',
       description: '',
       userId: props.userId
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.formType === 'new') {
+      this.formType = 'New Event';
+      this.setState({
+        date: new Date(),
+        amount: '',
+        description: ''
+      });
+    } else if (nextProps.formType === 'edit') {
+      this.formType = 'Edit Event';
+      this.setState({
+        date: new Date(nextProps.expenseToEdit.date),
+        amount: nextProps.expenseToEdit.amount,
+        description: nextProps.expenseToEdit.description
+      });
+    }
   }
 
   updateField(type, e, date) {
@@ -28,7 +46,10 @@ class NewExpense extends React.Component {
   }
 
   handleSubmit() {
-    this.props.createExpense(this.state, this.props.toggleEventForm);
+    if (this.props.formType === 'new')
+      this.props.createExpense(this.state, this.props.toggleEventForm);
+    else if (this.props.formType === 'edit')
+      console.log('edit action here');
   }
 
   render() {
@@ -48,7 +69,7 @@ class NewExpense extends React.Component {
 
     return (
       <Dialog
-        title="New Expense"
+        title={this.formType}
         actions={actions}
         modal={true}
         open={this.props.open}
@@ -57,13 +78,17 @@ class NewExpense extends React.Component {
         <form className='expense-form'>
           <DatePicker
             hintText="Date"
+            value={this.state.date}
             mode="landscape"
+            formatDate={date => moment(date).format('MMMM Do YYYY')}
             onChange={this.updateField.bind(this, 'date')} />
           <TextField
             floatingLabelText="Expense Amount"
+            value={this.state.amount}
             onChange={this.updateField.bind(this, 'amount')} />
           <TextField
             floatingLabelText="Description"
+            value={this.state.description}
             multiLine={true}
             rows={2}
             rowsMax={3}
@@ -85,4 +110,4 @@ const mapDispatchToProps = dispatch => ({
   createExpense: (expense, toggleForm) => dispatch(createExpense(expense, toggleForm))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewExpense);
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);

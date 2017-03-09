@@ -4,13 +4,15 @@ import { Table, TableBody, TableHeader,
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import ExpenseRow from './expense_row';
-import NewExpense from './new_expense';
+import ExpenseForm from './expense_form';
 
 class ExpenseTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      expenseFormOpen: false
+      expenseFormOpen: false,
+      formType: '',
+      expenseToEdit: null
     };
   }
 
@@ -18,15 +20,36 @@ class ExpenseTable extends React.Component {
     this.props.requestExpenses();
   }
 
-  toggleEventForm() {
+  toggleEventForm(type, expense) {
     const status = !this.state.expenseFormOpen;
-    this.setState({expenseFormOpen: status});
+    if (type === 'edit') {
+      this.setState({
+        expenseFormOpen: status,
+        formType: 'edit',
+        expenseToEdit: expense
+      });
+    }
+    else if (type === 'new') {
+      this.setState({
+        expenseFormOpen: status,
+        formType: 'new',
+        expenseToEdit: null
+      });
+    }
+    else {
+      this.setState({expenseFormOpen: status});
+    }
   }
 
   render () {
     const tableRows = [];
     this.props.expenses.forEach(expense => {
-      tableRows.push(<ExpenseRow key={expense.id} expense={expense} />);
+      tableRows.push(
+        <ExpenseRow
+          key={expense.id}
+          expense={expense}
+          toggleEventForm={this.toggleEventForm.bind(this, 'edit', expense)} />
+      );
     });
 
 
@@ -48,13 +71,15 @@ class ExpenseTable extends React.Component {
         </Table>
         <div className='add-expense'>
           <p className='add-expense-text'>Add an Expense</p>
-          <FloatingActionButton onClick={this.toggleEventForm.bind(this)}>
+          <FloatingActionButton onClick={this.toggleEventForm.bind(this, 'new')}>
             <ContentAdd />
           </FloatingActionButton>
         </div>
-        <NewExpense
+        <ExpenseForm
           open={this.state.expenseFormOpen}
-          toggleEventForm={this.toggleEventForm.bind(this)} />
+          toggleEventForm={this.toggleEventForm.bind(this)}
+          formType={this.state.formType}
+          expenseToEdit={this.state.expenseToEdit} />
       </div>
     );
   }
