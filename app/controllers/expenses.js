@@ -1,12 +1,29 @@
 var Expense = require('../models').Expense;
+var User = require('../models').User;
 
 function getExpenses(req, res, next) {
-  Expense.findAll()
-  .then(function(expenses) {
-    res.json(expenses);
+  if (req.body.admin) {
+    Expense.findAll()
+    .then(function(expenses) {
+      res.json(expenses);
+    })
+    .catch(next);
+  } else {
+    res.json('You are not a administrative user');
+  }
+}
+
+function getUserExpenses(req, res, next) {
+  User.findById(req.params.userId)
+  .then(function(user) {
+    user.getExpenses()
+    .then(function(userExpenses) {
+      res.json(userExpenses);
+    });
   })
   .catch(next);
 }
+
 
 function createExpense(req, res) {
   var expense = Expense.build({
@@ -60,6 +77,7 @@ function deleteExpense(req, res) {
 module.exports = {
   createExpense,
   getExpenses,
+  getUserExpenses,
   editExpense,
   deleteExpense
 };
