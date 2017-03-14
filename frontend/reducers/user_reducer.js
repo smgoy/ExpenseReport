@@ -11,7 +11,8 @@ const UserReducer = (state = _nullUser, action) => {
       return {
         username: action.user.username,
         admin: action.user.admin,
-        loggedIn: true
+        loggedIn: true,
+        id: action.user.id
       };
     case loginConstants.LOGOUT:
       return _nullUser;

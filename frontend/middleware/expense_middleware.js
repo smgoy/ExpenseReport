@@ -4,6 +4,7 @@ import { expenseConstants,
          removeExpense,
          updateExpenses } from '../actions/expense_actions';
 import { requestExpenses,
+         requestUserExpenses,
          createExpense,
          deleteExpense,
          editExpense } from '../util/expense';
@@ -17,6 +18,10 @@ const ExpenseMiddleware = ({dispatch}) => next => action => {
     case expenseConstants.REQUEST_EXPENSES:
       successCallback = expenses => dispatch(receiveExpenses(expenses));
       requestExpenses(successCallback);
+      return next(action);
+    case expenseConstants.REQUEST_USER_EXPENSES:
+      successCallback = expenses => dispatch(receiveExpenses(expenses));
+      requestUserExpenses(action.userId, successCallback);
       return next(action);
     case expenseConstants.CREATE_EXPENSE:
       successCallback = expense => {

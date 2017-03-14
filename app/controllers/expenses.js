@@ -1,5 +1,7 @@
 var Expense = require('../models').Expense;
 var User = require('../models').User;
+var jwt = require('jwt-simple');
+var config = require('../auth/config');
 
 function getExpenses(req, res, next) {
   if (req.body.admin) {
@@ -9,12 +11,14 @@ function getExpenses(req, res, next) {
     })
     .catch(next);
   } else {
-    res.json('You are not a administrative user');
+    res.json('You are not an administrative user');
   }
 }
 
 function getUserExpenses(req, res, next) {
-  User.findById(req.params.userId)
+  // var token = res.AuthHeader; how to get authheader
+  // var userId = jwt.decode(token, config.jwtSecret);
+  User.findById(req.body.userId)
   .then(function(user) {
     user.getExpenses()
     .then(function(userExpenses) {

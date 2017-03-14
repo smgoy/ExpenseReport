@@ -33,10 +33,10 @@ class LoginForm extends React.Component {
         <TextField
           floatingLabelText="Password"
           onChange={this.updateField.bind(this, 'pass')} />
-        <Link to='/expenses'><RaisedButton
+        <RaisedButton
           label="Login"
           type='password'
-          onClick={this.handleClick.bind(this)} /></Link>
+          onClick={this.handleClick.bind(this)} />
       </form>
     );
   }

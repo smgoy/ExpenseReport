@@ -1,6 +1,7 @@
 export const expenseConstants = {
   RECEIVE_EXPENSES: 'RECEIVE_EXPENSES',
   REQUEST_EXPENSES: 'REQUEST_EXPENSES',
+  REQUEST_USER_EXPENSES: 'REQUEST_USER_EXPENSES',
   CREATE_EXPENSE: 'CREATE_EXPENSE',
   RECEIVE_EXPENSE: 'RECEIVE_EXPRENSE',
   EDIT_EXPENSE: 'EDIT_EXPENSE',
@@ -16,6 +17,11 @@ export const receiveExpenses = expenses => ({
 
 export const requestExpenses = () => ({
   type: expenseConstants.REQUEST_EXPENSES
+});
+
+export const requestUserExpenses = userId => ({
+  type: expenseConstants.REQUEST_USER_EXPENSES,
+  userId
 });
 
 export const createExpense = (expense, toggleForm)=> ({

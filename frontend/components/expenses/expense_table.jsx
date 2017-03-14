@@ -17,7 +17,7 @@ class ExpenseTable extends React.Component {
   }
 
   componentWillMount() {
-    this.props.requestExpenses();
+    this.props.requestUserExpenses(this.props.userId);
   }
 
   toggleEventForm(type, expense) {
@@ -86,14 +86,15 @@ class ExpenseTable extends React.Component {
 }
 
 import { connect } from 'react-redux';
-import { requestExpenses } from '../../actions/expense_actions';
+import { requestUserExpenses } from '../../actions/expense_actions';
 
 const mapStateToProps = state => ({
-  expenses: state.expenses
+  expenses: state.expenses,
+  userId: state.user.id
 });
 
 const mapDispatchToProps = dispatch => ({
-  requestExpenses: () => dispatch(requestExpenses())
+  requestUserExpenses: userId => dispatch(requestUserExpenses(userId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseTable);
