@@ -2,6 +2,10 @@ import React from 'react';
 import { Link, hashHistory } from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
+import IconMenu from 'material-ui/IconMenu';
+import ExpandMore from 'material-ui/svg-icons/navigation/expand-more';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
 
 const Navbar = ({loggedIn, admin, logoutUser}) => {
 
@@ -11,17 +15,37 @@ const Navbar = ({loggedIn, admin, logoutUser}) => {
     logoutUser();
   };
 
-  let logoutButton;
+  const generateReport = () => {
+    hashHistory.replace('report');
+  };
 
-  if (loggedIn) {
-    logoutButton = <FlatButton label='Logout' onClick={logout} />;
-  }
+  const chooseEmployee = () => {
+
+  };
+
+  const adminOptions = () => {
+    if (admin) {
+      return <MenuItem onClick={chooseEmployee} primaryText="View Employees Expenses" />;
+    } else {
+      return undefined;
+    }
+  };
+
+  const LoggedInOptions = (props) => (
+    <IconMenu
+      iconButtonElement={<IconButton><ExpandMore /></IconButton>}
+      targetOrigin={{horizontal: 'right', vertical: 'top'}}
+      anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
+      <MenuItem onClick={generateReport} primaryText="Generate Report" />
+      {adminOptions()}
+      <MenuItem onClick={logout} primaryText="Logout" />
+    </IconMenu>
+  );
 
   return (
     <AppBar
       title = 'Expense Report'
-      iconElementLeft={null}
-      iconElementRight={logoutButton} />
+      iconElementRight={loggedIn ? <LoggedInOptions /> : undefined} />
   );
 };
 

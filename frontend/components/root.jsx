@@ -6,6 +6,7 @@ import App from './app';
 import RequireAuth from './auth/authenticate';
 import LoginForm from './login/login';
 import ExpenseTable from './expenses/expense_table';
+import ReportTable from './report/report_table';
 
 const Root = ({store}) => (
   <MuiThemeProvider>
@@ -14,6 +15,7 @@ const Root = ({store}) => (
         <Route path="/" component={App}>
           <IndexRoute component={LoginForm} />
           <Route path="expenses" component={RequireAuth(ExpenseTable)} />
+          <Route path="report" component={RequireAuth(ReportTable)} />
         </Route>
       </Router>
     </Provider>
