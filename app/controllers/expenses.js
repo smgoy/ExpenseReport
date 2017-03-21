@@ -18,7 +18,7 @@ function getExpenses(req, res, next) {
 function getUserExpenses(req, res, next) {
   // var token = res.AuthHeader; how to get authheader
   // var userId = jwt.decode(token, config.jwtSecret);
-  User.findById(req.body.userId)
+  User.findById(req.params.userId)
   .then(function(user) {
     user.getExpenses()
     .then(function(userExpenses) {
@@ -39,7 +39,7 @@ function createExpense(req, res) {
 
   expense.save()
   .then(function() {
-    res.json([expense]);
+    res.json(expense);
   })
   .catch(function(error) {
     res.status(422);
