@@ -16,7 +16,7 @@ const Navbar = ({loggedIn, admin, logoutUser}) => {
   };
 
   const generateReport = () => {
-    hashHistory.replace('report');
+    hashHistory.push('report');
   };
 
   const chooseEmployee = () => {
