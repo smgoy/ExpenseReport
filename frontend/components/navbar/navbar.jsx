@@ -20,7 +20,11 @@ const Navbar = ({loggedIn, admin, logoutUser}) => {
   };
 
   const chooseEmployee = () => {
+    hashHistory.push('employee-expense');
+  };
 
+  const myExenses = () => {
+    hashHistory.push('expenses');
   };
 
   const adminOptions = () => {
@@ -37,6 +41,7 @@ const Navbar = ({loggedIn, admin, logoutUser}) => {
       targetOrigin={{horizontal: 'right', vertical: 'top'}}
       anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
       <MenuItem onClick={generateReport} primaryText="Generate Report" />
+      <MenuItem onClick={myExenses} primaryText="My Expenses" />
       {adminOptions()}
       <MenuItem onClick={logout} primaryText="Logout" />
     </IconMenu>

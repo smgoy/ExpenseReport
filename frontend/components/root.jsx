@@ -16,6 +16,7 @@ const Root = ({store}) => (
           <IndexRoute component={LoginForm} />
           <Route path="expenses" component={RequireAuth(ExpenseTable)} />
           <Route path="report" component={RequireAuth(ReportTable)} />
+          <Route path="employee-expense" component={RequireAuth(ReportTable)} />
         </Route>
       </Router>
     </Provider>
