@@ -17,7 +17,8 @@ class ExpenseTable extends React.Component {
   }
 
   componentWillMount() {
-    this.props.requestUserExpenses(this.props.userId);
+    if(!this.props.expenses)
+      this.props.requestUserExpenses(this.props.userId);
   }
 
   toggleEventForm(type, expense) {
