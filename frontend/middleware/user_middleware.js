@@ -1,14 +1,15 @@
-import { receiveUser, userConstants } from '../actions/user_actions';
-import { requestUser } from '../util/user';
+import { receiveUser,
+         receiveUsers,
+         userConstants } from '../actions/user_actions';
+import { requestUser, requestUsers } from '../util/user';
 
 const UserMiddleware = ({dispatch}) => next => action => {
-  const successCallback = data => {
-    dispatch(receiveUser(data));
-  };
-
   switch (action.type) {
     case userConstants.REQUEST_USER:
-      requestUser(action.id, successCallback);
+      requestUser(action.id, data => dispatch(receiveUser(data)));
+      return next(action);
+    case userConstants.REQUEST_USERS:
+      requestUsers(users => dispatch(receiveUsers(users)));
       return next(action);
     default:
       return next(action);

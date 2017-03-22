@@ -1,6 +1,14 @@
 var User = require('../models').User;
 
-function createUser (req, res) {
+function getUsers(req, res, next) {
+  User.findAll()
+  .then(function(users) {
+    res.json(users);
+  })
+  .catch(next);
+}
+
+function createUser(req, res) {
   var user = User.build({
     username: req.body.username,
     password: req.body.password
@@ -16,7 +24,7 @@ function createUser (req, res) {
   });
 }
 
-function getUser (req, res, next) {
+function getUser(req, res, next) {
   User.findById(req.params.id)
   .then(function(user) {
     res.json({
@@ -28,6 +36,7 @@ function getUser (req, res, next) {
 }
 
 module.exports = {
+  getUsers,
   createUser,
   getUser
 };

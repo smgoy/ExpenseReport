@@ -6,6 +6,7 @@ import App from './app';
 import RequireAuth from './auth/authenticate';
 import LoginForm from './login/login';
 import ExpenseTable from './expenses/expense_table';
+import EmployeeExpenseTable from './expenses/employee_expense_table';
 import ReportTable from './report/report_table';
 
 const Root = ({store}) => (
@@ -16,7 +17,7 @@ const Root = ({store}) => (
           <IndexRoute component={LoginForm} />
           <Route path="expenses" component={RequireAuth(ExpenseTable)} />
           <Route path="report" component={RequireAuth(ReportTable)} />
-          <Route path="employee-expense" component={RequireAuth(ReportTable)} />
+          <Route path="employee-expense" component={RequireAuth(EmployeeExpenseTable)} />
         </Route>
       </Router>
     </Provider>

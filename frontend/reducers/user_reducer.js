@@ -5,7 +5,7 @@ const _nullUser = Object.freeze({
   loggedIn: false
 });
 
-const UserReducer = (state = _nullUser, action) => {
+export const UserReducer = (state = _nullUser, action) => {
   switch (action.type) {
     case userConstants.RECEIVE_USER:
       return {
@@ -21,4 +21,11 @@ const UserReducer = (state = _nullUser, action) => {
   }
 };
 
-export default UserReducer;
+export const UsersReducer = (state = [], action) => {
+  switch (action.type) {
+    case userConstants.RECEIVE_USERS:
+      return action.users;
+    default:
+      return state;
+    }
+};
