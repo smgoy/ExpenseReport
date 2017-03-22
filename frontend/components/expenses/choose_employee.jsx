@@ -10,10 +10,10 @@ const ChooseEmployee = ({employees, fetchEmployeeExpenses, open}) => {
       <Employee
         key={employee.id}
         name={employee.username}
-        onClick={fetchEmployeeExpenses.bind(null, employee.id)} />
+        onClick={fetchEmployeeExpenses.bind(null, employee)} />
     );
   });
-  debugger;
+
   return (
     <Dialog
       title='Choose Employee'

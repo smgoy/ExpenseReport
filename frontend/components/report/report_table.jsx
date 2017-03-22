@@ -8,17 +8,21 @@ import DatePicker from 'material-ui/DatePicker';
 class ReportTable extends React.Component {
   constructor(props) {
     super(props);
-    if (props.expenses !== 0) {
+    if (props.expenses.length !== 0) {
       this.state = {
         startDateIdx: 0,
         endDateIdx: props.expenses.length - 1,
-        expenses: props.expenses
+        expenses: props.expenses,
+        startDate: new Date(props.expenses[0].date),
+        endDate: new Date(props.expenses[props.expenses.length - 1].date)
       };
     } else {
       this.state = {
         startDateIdx: null,
         endDateIdx: null,
-        expenses: null
+        expenses: null,
+        startDate: new Date(),
+        endDate: new Date()
       };
     }
   }
@@ -32,7 +36,9 @@ class ReportTable extends React.Component {
     this.setState({
       startDateIdx: 0,
       endDateIdx: expenses.length - 1,
-      expenses: expenses
+      expenses: expenses,
+      startDate: new Date(expenses[0].date),
+      endDate: new Date(expenses[expenses.length - 1].date)
     });
   }
 
@@ -47,7 +53,8 @@ class ReportTable extends React.Component {
 
       this.setState({
         startDateIdx: idx,
-        expenses: this.props.expenses.slice(idx, this.state.endDateIdx)
+        expenses: this.props.expenses.slice(idx, this.state.endDateIdx),
+        startDate: date
       });
     } else if (type === 'end') {
       idx = this.props.expenses.length - 1;
@@ -57,7 +64,8 @@ class ReportTable extends React.Component {
 
       this.setState({
         endDateIdx: idx,
-        expenses: this.props.expenses.slice(this.state.startDateIdx, idx)
+        expenses: this.props.expenses.slice(this.state.startDateIdx, idx),
+        endDate: date
       });
     }
   }
@@ -96,7 +104,8 @@ class ReportTable extends React.Component {
         <div className='date-container'>
           <p className='date-padding'>Filter Dates from:</p>
           <DatePicker
-            hintText='Start'
+            value={this.state.startDate}
+            maxDate={this.state.endDate}
             formatDate={date => moment(date).format('MMMM Do YYYY')}
             mode="landscape"
             autoOk={true}
@@ -104,7 +113,8 @@ class ReportTable extends React.Component {
             onChange={this.changeDate.bind(this, 'start')} />
           <p className='date-padding'>to</p>
           <DatePicker
-            hintText='End'
+            minDate={this.state.startDate}
+            value={this.state.endDate}
             formatDate={date => moment(date).format('MMMM Do YYYY')}
             mode="landscape"
             autoOk={true}

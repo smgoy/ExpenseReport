@@ -9,6 +9,18 @@ class ExpenseRow extends React.Component {
     this.props.deleteExpense(expenseId);
   }
 
+  displayEditDelete() {
+    if (this.props.location.pathname === '/employee-expense') {
+      return undefined;
+    } else if (this.props.location.pathname === '/expenses') {
+      return (
+        <TableRowColumn>
+          <a onClick={this.props.toggleEventForm}>Edit</a> | <a onClick={this.handleDelete.bind(this, this.props.expense.id)}>Delete</a>
+        </TableRowColumn>
+      );
+    }
+  }
+
   render() {
     const expense = this.props.expense;
 
@@ -17,9 +29,7 @@ class ExpenseRow extends React.Component {
         <TableRowColumn>{moment(expense.date).format('MMMM Do YYYY')}</TableRowColumn>
         <TableRowColumn>{'$' + numeral(expense.amount).format('0,0.00').toString()}</TableRowColumn>
         <TableRowColumn>{expense.description}</TableRowColumn>
-        <TableRowColumn>
-          <a onClick={this.props.toggleEventForm}>Edit</a> | <a onClick={this.handleDelete.bind(this, expense.id)}>Delete</a>
-        </TableRowColumn>
+        {this.displayEditDelete()}
       </TableRow>
     );
   }

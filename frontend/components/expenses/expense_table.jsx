@@ -46,6 +46,7 @@ class ExpenseTable extends React.Component {
     this.props.expenses.forEach(expense => {
       tableRows.push(
         <ExpenseRow
+          {...this.props}
           key={expense.id}
           expense={expense}
           toggleEventForm={this.toggleEventForm.bind(this, 'edit', expense)} />

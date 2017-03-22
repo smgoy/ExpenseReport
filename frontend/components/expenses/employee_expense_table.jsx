@@ -2,6 +2,8 @@ import React from 'react';
 import { Table, TableBody, TableHeader,
          TableHeaderColumn, TableRow } from 'material-ui/Table';
 import ChooseEmployee from './choose_employee';
+import ExpenseRow from './expense_row';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class EmployeeExpenseTable extends React.Component {
   constructor(props) {
@@ -17,17 +19,38 @@ class EmployeeExpenseTable extends React.Component {
   }
 
   fetchEmployeeExpenses(employee) {
-    this.props.requestUserExpense(employee.id);
+    this.props.requestUserExpenses(employee.id);
     this.setState({
       chooseEmployeeOpen: false,
-      employeeName: employee.name
+      employeeName: employee.username
+    });
+  }
+
+  openChooseEmployee(e) {
+    e.preventDefault();
+    this.setState({
+      chooseEmployeeOpen: true,
+      employeeName: ''
     });
   }
 
   render() {
+    const tableRows = [];
+    this.props.expenses.forEach(expense => {
+      tableRows.push(
+        <ExpenseRow
+          {...this.props}
+          key={expense.id}
+          expense={expense} />
+      );
+    });
+
     return(
       <div className='expense-table-container'>
-        <h1>{this.state.employeeName + "'s Expenses:'"}</h1>
+        <div className='choose-employee'>
+          <h1>{this.state.chooseEmployeeOpen ? undefined : 'View ' + this.state.employeeName + ' Expenses:'}</h1>
+          <RaisedButton label="Change Employee" onClick={this.openChooseEmployee.bind(this)} />
+        </div>
         <Table>
           <TableHeader adjustForCheckbox={false}
                        displaySelectAll={false}>
@@ -38,7 +61,7 @@ class EmployeeExpenseTable extends React.Component {
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
-
+            {this.state.chooseEmployeeOpen ? undefined : tableRows}
           </TableBody>
         </Table>
         <ChooseEmployee
@@ -51,7 +74,8 @@ class EmployeeExpenseTable extends React.Component {
 }
 
 import { connect } from 'react-redux';
-import { requestUsers, requestUserExpenses } from '../../actions/user_actions';
+import { requestUsers } from '../../actions/user_actions';
+import { requestUserExpenses } from '../../actions/expense_actions';
 
 const mapStateToProps = state => ({
   expenses: state.expenses,
