@@ -5,16 +5,22 @@ import ReportRow from './report_row';
 import moment from 'moment';
 import DatePicker from 'material-ui/DatePicker';
 
-window.moment = moment;
-
 class ReportTable extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      startDateIdx: null,
-      endDateIdx: null,
-      expenses: null
-    };
+    if (props.expenses !== 0) {
+      this.state = {
+        startDateIdx: 0,
+        endDateIdx: props.expenses.length - 1,
+        expenses: props.expenses
+      };
+    } else {
+      this.state = {
+        startDateIdx: null,
+        endDateIdx: null,
+        expenses: null
+      };
+    }
   }
 
   componentWillMount() {
@@ -26,9 +32,7 @@ class ReportTable extends React.Component {
     this.setState({
       startDateIdx: 0,
       endDateIdx: expenses.length - 1,
-      expenses: expenses,
-      defaultStartDate: new Date(expenses[0].date),
-      defaultEndDate: new Date(expenses[expenses.length - 1])
+      expenses: expenses
     });
   }
 
@@ -92,7 +96,7 @@ class ReportTable extends React.Component {
         <div className='date-container'>
           <p className='date-padding'>Filter Dates from:</p>
           <DatePicker
-            defaultDate={this.state.defaultStartDate}
+            hintText='Start'
             formatDate={date => moment(date).format('MMMM Do YYYY')}
             mode="landscape"
             autoOk={true}
@@ -100,7 +104,7 @@ class ReportTable extends React.Component {
             onChange={this.changeDate.bind(this, 'start')} />
           <p className='date-padding'>to</p>
           <DatePicker
-            defaultDate={this.state.defaultEndDate}
+            hintText='End'
             formatDate={date => moment(date).format('MMMM Do YYYY')}
             mode="landscape"
             autoOk={true}

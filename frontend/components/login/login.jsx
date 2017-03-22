@@ -20,7 +20,8 @@ class LoginForm extends React.Component {
       this.setState({password: e.currentTarget.value});
   }
 
-  handleClick() {
+  handleClick(e) {
+    e.preventDefault();
     this.props.login(this.state);
   }
 
