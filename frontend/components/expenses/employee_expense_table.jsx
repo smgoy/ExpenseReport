@@ -12,7 +12,7 @@ class EmployeeExpenseTable extends React.Component {
     };
   }
 
-  componenetWillMount() {
+  componentWillMount() {
     this.props.requestUsers();
   }
 

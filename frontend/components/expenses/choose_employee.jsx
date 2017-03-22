@@ -9,11 +9,11 @@ const ChooseEmployee = ({employees, fetchEmployeeExpenses, open}) => {
     viewEmployees.push(
       <Employee
         key={employee.id}
-        name={employee.name}
+        name={employee.username}
         onClick={fetchEmployeeExpenses.bind(null, employee.id)} />
     );
   });
-
+  debugger;
   return (
     <Dialog
       title='Choose Employee'
