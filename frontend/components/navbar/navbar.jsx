@@ -1,11 +1,7 @@
 import React from 'react';
 import { Link, hashHistory } from 'react-router';
-import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
-import IconMenu from 'material-ui/IconMenu';
-import ExpandMore from 'material-ui/svg-icons/navigation/expand-more';
-import MenuItem from 'material-ui/MenuItem';
-import IconButton from 'material-ui/IconButton';
+import Paper from 'material-ui/Paper';
 
 const Navbar = ({loggedIn, admin, logoutUser}) => {
 
@@ -27,30 +23,52 @@ const Navbar = ({loggedIn, admin, logoutUser}) => {
     hashHistory.push('expenses');
   };
 
-  const adminOptions = () => {
-    if (admin) {
-      return <MenuItem onClick={chooseEmployee} primaryText="View Employees Expenses" />;
-    } else {
-      return undefined;
+  const buttons = () => {
+    let buttonArray = [];
+
+    if (loggedIn) {
+      buttonArray = [
+        <FlatButton
+          key='report'
+          label='Generate Report'
+          onClick={generateReport} />,
+        <FlatButton
+          key='expenses'
+          label='My Expenses'
+          onClick={myExenses} />,
+        <FlatButton
+          key='logout'
+          label='Logout'
+          onClick={logout} />
+      ];
+
+      if (admin) {
+        buttonArray.unshift(
+          <FlatButton
+            key='employee expenses'
+            label='View Employee Expenses'
+            onClick={chooseEmployee} />
+        );
+      }
     }
+    return buttonArray;
   };
 
-  const LoggedInOptions = (props) => (
-    <IconMenu
-      iconButtonElement={<FlatButton label="Menu" style={{color: 'white', marginRight: '5px', marginTop: '5px'}} />}
-      targetOrigin={{horizontal: 'right', vertical: 'top'}}
-      anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
-      <MenuItem onClick={generateReport} primaryText="Generate Report" />
-      <MenuItem onClick={myExenses} primaryText="My Expenses" />
-      {adminOptions()}
-      <MenuItem onClick={logout} primaryText="Logout" />
-    </IconMenu>
-  );
+  const style = {
+    width: '100%',
+    height: 60,
+    backgroundColor: '#00BCD4'
+  };
 
   return (
-    <AppBar
-      title = 'Expense Report'
-      iconElementRight={loggedIn ? <LoggedInOptions /> : undefined} />
+    <Paper style={style} zDepth={1}>
+      <nav className='navbar'>
+        <p className='logo'>ExpenseReport</p>
+        <div className='navbar-buttons'>
+          {buttons()}
+        </div>
+      </nav>
+    </Paper>
   );
 };
 

@@ -3,19 +3,24 @@ import Home from '../../frontend/components/home/home';
 
 describe('Home', () => {
   let component;
+
   beforeEach(() => {
     component = renderComponent(Home);
   });
 
-  it('displays text on the page', () => {
-
+  it('has two buttons', () => {
+    expect(component.find('button')).to.have.lengthOf(2);
   });
 
-  it('has login button for admin', () => {
+  describe('buttons dispatch correct action', () => {
+    it('has a button that logs in employee', () => {
 
+    });
+
+    it('has a button that logs in admin', () => {
+
+    });
   });
 
-  it('has login button for non admin', () => {
 
-  });
 });
