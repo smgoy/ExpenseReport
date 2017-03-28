@@ -37,7 +37,7 @@ const Navbar = ({loggedIn, admin, logoutUser}) => {
 
   const LoggedInOptions = (props) => (
     <IconMenu
-      iconButtonElement={<FlatButton label="Menu" />}
+      iconButtonElement={<FlatButton label="Menu" style={{color: 'white', marginRight: '5px', marginTop: '5px'}} />}
       targetOrigin={{horizontal: 'right', vertical: 'top'}}
       anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
       <MenuItem onClick={generateReport} primaryText="Generate Report" />
