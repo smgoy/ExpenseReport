@@ -6,6 +6,21 @@ class Home extends React.Component {
 
   }
 
+  login(type) {
+    if (type === 'admin') {
+      this.props.login({
+        username: 'sammy',
+        password: 'password'
+      });
+    } else if (type === 'employee') {
+      this.props.login({
+        username: 'sammy',
+        password: 'password'
+      });
+    }
+
+  }
+
   render() {
     return(
       <div className='home'>
@@ -23,12 +38,29 @@ class Home extends React.Component {
         </h2>
         <div className='login-button-container'>
           <h1 className='intro-text-h1'>Check it out:</h1>
-          <RaisedButton label='Login as an Admin' primary={true} />
-          <RaisedButton label='Login as an Employee' primary={true} />
+          <RaisedButton
+            label='Login as an Admin'
+            primary={true}
+            onClick={this.login.bind(this, 'admin')} />
+          <RaisedButton
+            label='Login as an Employee'
+            primary={true}
+            onClick={this.login.bind(this, 'employee')} />
         </div>
       </div>
     );
   }
 }
 
-export default Home;
+import { connect } from 'react-redux';
+import { login } from '../../actions/login_actions';
+
+const mapStateToProps = state => ({
+  user: state.user
+});
+
+const mapDispatchToProps = dispatch => ({
+  login: user => dispatch(login(user))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

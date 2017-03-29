@@ -25,21 +25,25 @@ const Navbar = ({loggedIn, admin, logoutUser}) => {
 
   const buttons = () => {
     let buttonArray = [];
+    const style = {color: 'white'};
 
     if (loggedIn) {
       buttonArray = [
         <FlatButton
           key='report'
           label='Generate Report'
-          onClick={generateReport} />,
+          onClick={generateReport}
+          style={style} />,
         <FlatButton
           key='expenses'
           label='My Expenses'
-          onClick={myExenses} />,
+          onClick={myExenses}
+          style={style} />,
         <FlatButton
           key='logout'
           label='Logout'
-          onClick={logout} />
+          onClick={logout}
+          style={style} />
       ];
 
       if (admin) {
@@ -47,7 +51,8 @@ const Navbar = ({loggedIn, admin, logoutUser}) => {
           <FlatButton
             key='employee expenses'
             label='View Employee Expenses'
-            onClick={chooseEmployee} />
+            onClick={chooseEmployee}
+            style={style} />
         );
       }
     }
