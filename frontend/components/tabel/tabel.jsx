@@ -11,13 +11,27 @@ class TabelContent extends React.Component {
       expenseToEdit: null,
       expenseFormOpen: props.config.expenseFormOpen,
       chooseEmployeeOpen: props.config.chooseEmployeeOpen,
-      tableType: props.location.pathname,
+      tableType: this.cleanPathName(props.location.pathname),
       formType: ''
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ tableType: nextProps.location.pathname });
+    this.setState(
+      { tableType: this.cleanPathName(nextProps.location.pathname) }
+    );
+  }
+
+  componentWillMount() {
+    this.props.requestUserExpenses(this.props.userId);
+  }
+
+  cleanPathName(pathname) {
+    if (pathname[0] === '/') {
+      return pathname.substr(1);
+    } else {
+      return pathname;
+    }
   }
 
   toggleEventForm(type, expense) {
@@ -45,11 +59,11 @@ class TabelContent extends React.Component {
     let colNames;
     const { tableType } = this.state;
 
-    if (tableType === 'expenses' || tableType === '/expenses') {
+    if (tableType === 'expenses') {
         colNames = ['Date', 'Amount', 'Description', 'Edit | Delete'];
-    } else if (tableType === 'report' || tableType === '/report') {
+    } else if (tableType === 'report') {
         colNames = ['Date', 'Amount', 'Description'];
-    } else if (tableType === 'employee-expense' || tableType === '/employee-expense') {
+    } else if (tableType === 'employee-expense') {
         colNames = ['Week of', 'Amount'];
     }
 
@@ -62,7 +76,7 @@ class TabelContent extends React.Component {
 
   renderNewExpenseButton() {
     const { tableType } = this.state;
-    if (tableType === 'expenses' || tableType === '/expenses') {
+    if (tableType === 'expenses') {
       return (
         <NewExpenseButton
           toggleEventForm={this.toggleEventForm.bind(this, 'new')} />
