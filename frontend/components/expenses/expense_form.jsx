@@ -12,23 +12,15 @@ class ExpenseForm extends React.Component {
     super(props);
     this.state = {
       date: new Date(),
-      amount: '',
+      amount: 0,
       description: '',
-      userId: props.userId,
-      expenseId: null
+      expenseId: null,
+      userId: props.userId
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.formType === 'new') {
-      this.formType = 'New Event';
-      this.setState({
-        date: new Date(),
-        amount: '',
-        description: ''
-      });
-    } else if (nextProps.formType === 'edit') {
-      this.formType = 'Edit Event';
+    if (nextProps.formType === 'edit') {
       this.setState({
         date: new Date(nextProps.expenseToEdit.date),
         amount: nextProps.expenseToEdit.amount,
@@ -39,19 +31,31 @@ class ExpenseForm extends React.Component {
   }
 
   updateField(type, e, date) {
-    if (type === 'date')
-      this.setState({date});
-    else if (type === 'amount')
-      this.setState({amount: e.currentTarget.value});
-    else if (type === 'desc')
+    if (type === 'date') {
+      this.setState({ date });
+    } else if (type === 'amount') {
+      let amount = e.currentTarget.value.substr(1);
+      amount = amount.split(',').join('');
+      if (amount.length - amount.indexOf('.') === 2) {
+        this.setState({ amount: parseFloat(amount, 10) * 10 });
+      } else {
+        this.setState({ amount: parseFloat(amount, 10) * 1000 });
+      }
+    }
+    else if (type === 'desc') {
       this.setState({description: e.currentTarget.value});
+    }
   }
 
   handleSubmit() {
-    if (this.props.formType === 'new')
+    if (this.props.formType === 'New Event')
       this.props.createExpense(this.state, this.props.toggleEventForm);
-    else if (this.props.formType === 'edit')
+    else if (this.props.formType === 'Edit Event')
       this.props.editExpense(this.state, this.props.toggleEventForm);
+  }
+
+  formatAmountValue() {
+    return '$' + numeral(this.state.amount / 100).format('0,0.00').toString();
   }
 
   render() {
@@ -71,7 +75,7 @@ class ExpenseForm extends React.Component {
 
     return (
       <Dialog
-        title={this.formType}
+        title={this.props.formType}
         actions={actions}
         modal={true}
         open={this.props.open}
@@ -86,7 +90,7 @@ class ExpenseForm extends React.Component {
             onChange={this.updateField.bind(this, 'date')} />
           <TextField
             floatingLabelText="Expense Amount"
-            value={this.state.amount}
+            value={this.formatAmountValue()}
             onChange={this.updateField.bind(this, 'amount')} />
           <TextField
             floatingLabelText="Description"

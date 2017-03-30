@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { hashHistory } from 'react-router';
 
-export default function(ComposedComponent) {
+export default function(ComposedComponent, configProps) {
   class Authentication extends Component {
     componentWillMount() {
       if (!this.props.loggedIn) {
@@ -17,7 +17,7 @@ export default function(ComposedComponent) {
     }
 
     render() {
-      return <ComposedComponent {...this.props} />;
+      return <ComposedComponent config={configProps} {...this.props} />;
     }
   }
 

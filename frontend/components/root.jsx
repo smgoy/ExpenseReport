@@ -8,6 +8,7 @@ import Home from './home/home';
 import ExpenseTable from './expenses/expense_table';
 import EmployeeExpenseTable from './expenses/employee_expense_table';
 import ReportTable from './report/report_table';
+import TableContent from './tabel/tabel';
 
 const Root = ({store}) => (
   <MuiThemeProvider>
@@ -15,9 +16,9 @@ const Root = ({store}) => (
       <Router history={hashHistory}>
         <Route path="/" component={App}>
           <IndexRoute component={Home} />
-          <Route path="expenses" component={RequireAuth(ExpenseTable)} />
-          <Route path="report" component={RequireAuth(ReportTable)} />
-          <Route path="employee-expense" component={RequireAuth(EmployeeExpenseTable)} />
+          <Route path="expenses" component={RequireAuth(TableContent, {expenseFormOpen: false, chooseEmployeeOpen: false})} />
+          <Route path="report" component={RequireAuth(TableContent, {expenseFormOpen: false, chooseEmployeeOpen: false})} />
+          <Route path="employee-expense" component={RequireAuth(TableContent, {expenseFormOpen: false, chooseEmployeeOpen: true})} />
         </Route>
       </Router>
     </Provider>
