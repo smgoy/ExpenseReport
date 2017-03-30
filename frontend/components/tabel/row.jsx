@@ -10,22 +10,24 @@ const Row = ({ row, pathname, toggleEventForm, deleteExpense }) => {
     Object.keys(row).forEach( col => {
       if (col === 'date') {
         rowColumns.push(
-          <TableRowColumn>
+          <TableRowColumn key='date'>
             {moment(row.date).format('MMMM Do YYYY')}
           </TableRowColumn>
         );
       } else if (col === 'amount') {
         rowColumns.push(
-          <TableRowColumn>
+          <TableRowColumn key='amount'>
             {'$' + numeral(row.amount).format('0,0.00').toString()}
           </TableRowColumn>
         );
       } else if (col === 'description') {
         rowColumns.push(
-          <TableRowColumn>{row.description}</TableRowColumn>
+          <TableRowColumn key='description'>{row.description}</TableRowColumn>
         );
       }
     });
+
+    return rowColumns;
   };
 
   const handleDelete = (expenseId) => {
