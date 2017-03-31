@@ -20,12 +20,19 @@ class ExpenseForm extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.formType === 'edit') {
+    if (nextProps.formType === 'Edit Event') {
       this.setState({
         date: new Date(nextProps.expenseToEdit.date),
-        amount: nextProps.expenseToEdit.amount,
+        amount: nextProps.expenseToEdit.amount * 100,
         description: nextProps.expenseToEdit.description,
         expenseId: nextProps.expenseToEdit.id
+      });
+    } else if (nextProps.formType === 'New Event') {
+      this.setState({
+        date: new Date(),
+        amount: 0,
+        description: '',
+        expenseId: null
       });
     }
   }
@@ -38,7 +45,7 @@ class ExpenseForm extends React.Component {
       amount = amount.split(',').join('');
       if (amount.length - amount.indexOf('.') === 2) {
         this.setState({ amount: parseFloat(amount, 10) * 10 });
-      } else {
+      } else if ('0123456789'.includes(amount[amount.length - 1])) {
         this.setState({ amount: parseFloat(amount, 10) * 1000 });
       }
     }
