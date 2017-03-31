@@ -6,6 +6,8 @@ import ExpenseForm from '../expenses/expense_form';
 import ChooseEmployee from '../expenses/choose_employee';
 import Row from './row';
 import RaisedButton from 'material-ui/RaisedButton';
+import FilterDates from '../report/filter_dates';
+import moment from 'moment';
 
 class TabelContent extends React.Component {
   constructor(props) {
@@ -16,14 +18,24 @@ class TabelContent extends React.Component {
       chooseEmployeeOpen: props.config.chooseEmployeeOpen,
       tableType: this.cleanPathName(props.location.pathname),
       formType: '',
-      employeeUsername: ''
+      employeeUsername: '',
+      startDate: new Date(),
+      endDate: new Date()
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState(
-      { tableType: this.cleanPathName(nextProps.location.pathname) }
-    );
+    let startDate = new Date();
+    let endDate = new Date();
+    if (nextProps.expenses.length !== 0) {
+      startDate = new Date(nextProps.expenses[0].date);
+      endDate = new Date(nextProps.expenses[nextProps.expenses.length - 1].date);
+    }
+    this.setState({
+      tableType: this.cleanPathName(nextProps.location.pathname),
+      startDate,
+      endDate
+    });
   }
 
   componentWillMount() {
@@ -91,17 +103,53 @@ class TabelContent extends React.Component {
     }
   }
 
+  changeDate(type, e, date) {
+    if (type === 'start') {
+      this.setState({
+        startDate: date
+      });
+    } else if (type === 'end') {
+      this.setState({
+        endDate: date
+      });
+    }
+  }
+
+  createReport(expenses) {
+    const reportHash = {};
+    expenses.forEach( expense => {
+      if (new Date(expense.date) >= this.state.startDate && new Date(expense.date) <= this.state.endDate) {
+        const firstDayOfWeek = moment(expense.date).startOf('week');
+        reportHash[firstDayOfWeek] = reportHash[firstDayOfWeek] + expense.amount || expense.amount;
+      }
+    });
+    return reportHash;
+  }
+
   renderRows() {
     const tableRows = [];
-    this.props.expenses.forEach(expense => {
-      tableRows.push(
-        <Row
-          key={expense.id}
-          row={expense}
-          toggleEventForm={this.toggleEventForm.bind(this, 'edit', expense)}
-          pathname={this.state.tableType} />
-      );
-    });
+
+    if (this.state.tableType === 'report') {
+      const reportHash = this.createReport(this.props.expenses);
+      Object.keys(reportHash).forEach( date => {
+        tableRows.push(
+          <Row
+            key={date}
+            row={{date, amount: reportHash[date]}}
+            pathname={this.state.tableType} />
+        );
+      });
+    } else {
+      this.props.expenses.forEach(expense => {
+        tableRows.push(
+          <Row
+            key={expense.id}
+            row={expense}
+            toggleEventForm={this.toggleEventForm.bind(this, 'edit', expense)}
+            pathname={this.state.tableType} />
+        );
+      });
+    }
 
     return tableRows;
   }
@@ -114,6 +162,22 @@ class TabelContent extends React.Component {
           <RaisedButton label="Change Employee" onClick={this.openChooseEmployee.bind(this)} />
         </div>
       );
+    }
+  }
+
+  renderFilterDate() {
+    if (this.state.tableType === 'report') {
+      const { expenses } = this.props;
+      if (expenses.length !== 0) {
+        const startDate = this.state.startDate;
+        const endDate = this.state.endDate;
+        return (
+          <FilterDates
+            startDate={startDate}
+            endDate={endDate}
+            changeDate={this.changeDate.bind(this)} />
+        );
+      }
     }
   }
 
@@ -137,6 +201,7 @@ class TabelContent extends React.Component {
     return(
       <div className='table'>
         {this.renderChooseEmployee()}
+        {this.renderFilterDate()}
         <Table>
           <TableHeader adjustForCheckbox={false}
                        displaySelectAll={false}>
@@ -145,7 +210,7 @@ class TabelContent extends React.Component {
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
-            {this.renderRows()}
+            {this.state.chooseEmployeeOpen ? null : this.renderRows()}
           </TableBody>
         </Table>
         {this.renderNewExpenseButton()}

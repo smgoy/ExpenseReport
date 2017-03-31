@@ -124,7 +124,7 @@ table {
 	align-items: center;
 }
 
-.date-container {
+.filter-dates {
 	display: flex;
 	flex-direction: row;
 	align-items: baseline;

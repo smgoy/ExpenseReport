@@ -5,9 +5,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import App from './app';
 import RequireAuth from './auth/authenticate';
 import Home from './home/home';
-import ExpenseTable from './expenses/expense_table';
-import EmployeeExpenseTable from './expenses/employee_expense_table';
-import ReportTable from './report/report_table';
 import TableContent from './tabel/tabel';
 
 const Root = ({store}) => (
