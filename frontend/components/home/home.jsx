@@ -1,7 +1,7 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 
-const Home = ({ loginUser }) => {
+export const Home = ({ loginUser }) => {
 
   const handleLogin = (type) => {
     if (type === 'admin') {
@@ -50,12 +50,8 @@ const Home = ({ loginUser }) => {
 import { connect } from 'react-redux';
 import { login } from '../../actions/login_actions';
 
-const mapStateToProps = state => ({
-  user: state.user
-});
-
 const mapDispatchToProps = dispatch => ({
   loginUser: user => dispatch(login(user))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(null, mapDispatchToProps)(Home);
