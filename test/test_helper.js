@@ -5,6 +5,8 @@ import TestUtils from 'react-addons-test-utils';
 import jsdom from 'jsdom';
 import chai, { expect } from 'chai';
 import chaiJquery from 'chai-jquery';
+import sinon from "sinon";
+import sinonChai from "sinon-chai";
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducers from '../frontend/reducers/master_reducer';
@@ -12,6 +14,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 injectTapEventPlugin();
+chai.use(sinonChai);
 
 global.document = jsdom.jsdom('<!doctype html><html><body></body></html>');
 global.window = global.document.defaultView;
@@ -39,4 +42,4 @@ $.fn.simulate = function(eventName, value) {
   TestUtils.Simulate[eventName](this[0]);
 };
 
-export {renderComponent, expect};
+export {renderComponent, expect, sinon};
