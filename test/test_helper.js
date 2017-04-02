@@ -33,12 +33,10 @@ const $ = _$(window);
 
 chaiJquery(chai, chai.util, $);
 
-function renderComponent(ComponentClass, props = {}, state = {}) {
+function renderComponent(ComponentClass, props = {}) {
   const componentInstance =  TestUtils.renderIntoDocument(
     <MuiThemeProvider>
-      <Provider store={createStore(reducers, state)}>
-        <ComponentClass {...props} />
-      </Provider>
+      <ComponentClass {...props} />
     </MuiThemeProvider>
   );
 

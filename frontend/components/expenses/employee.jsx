@@ -1,7 +1,9 @@
 import React from 'react';
 
 const Employee = ({name, onClick}) => (
-  <p onClick={onClick}>{name}</p>
+  <div className='employee'>
+    <p onClick={onClick}>{name}</p>
+  </div>
 );
 
 export default Employee;
