@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link, hashHistory } from 'react-router';
+import { hashHistory } from 'react-router';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 
-const Navbar = ({loggedIn, admin, logoutUser}) => {
+export const Navbar = ({loggedIn, admin, logoutUser}) => {
 
   const logout = () => {
     localStorage.removeItem('currentUser');

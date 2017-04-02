@@ -19,6 +19,16 @@ chai.use(sinonChai);
 global.document = jsdom.jsdom('<!doctype html><html><body></body></html>');
 global.window = global.document.defaultView;
 global.navigator = global.window.navigator;
+
+const setItemSpy = sinon.spy();
+const getItemSpy = sinon.spy();
+const removeItemSpy = sinon.spy();
+global.localStorage = {
+  setItem: setItemSpy,
+  getItem: getItemSpy,
+  removeItem: removeItemSpy
+};
+
 const $ = _$(window);
 
 chaiJquery(chai, chai.util, $);
@@ -42,4 +52,4 @@ $.fn.simulate = function(eventName, value) {
   TestUtils.Simulate[eventName](this[0]);
 };
 
-export {renderComponent, expect, sinon};
+export {renderComponent, expect, sinon, removeItemSpy, getItemSpy, setItemSpy};
