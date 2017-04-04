@@ -6,12 +6,12 @@ export const Home = ({ loginUser }) => {
   const handleLogin = (type) => {
     if (type === 'admin') {
       loginUser({
-        username: 'sammy',
-        password: 'password'
+        username: 'Sam Gyory',
+        password: 'securePassword'
       });
     } else if (type === 'employee') {
       loginUser({
-        username: 'sammy',
+        username: 'Chuck Norris',
         password: 'password'
       });
     }

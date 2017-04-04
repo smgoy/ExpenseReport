@@ -38,7 +38,7 @@ const Row = ({ row, pathname, toggleEventForm, deleteExpense }) => {
     if (pathname === 'expenses') {
       return (
         <TableRowColumn>
-          <a onClick={toggleEventForm}>Edit</a> | <a onClick={handleDelete.bind(null, row.id)}>Delete</a>
+          <a className='edit-delete' onClick={toggleEventForm}>Edit</a> | <a className='edit-delete' onClick={handleDelete.bind(null, row.id)}>Delete</a>
         </TableRowColumn>
       );
     }

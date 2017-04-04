@@ -2,7 +2,7 @@ import React from 'react';
 
 const Employee = ({name, onClick}) => (
   <div className='employee'>
-    <p onClick={onClick}>{name}</p>
+    <p className='display-employee' onClick={onClick}>{name}</p>
   </div>
 );
 

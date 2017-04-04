@@ -18,7 +18,8 @@ const ChooseEmployee = ({employees, fetchEmployeeExpenses, open}) => {
     <Dialog
       title='Choose Employee'
       autoScrollBodyContent={true}
-      open={open} >
+      open={open}
+      contentStyle={{width: '500px'}} >
       {viewEmployees}
     </Dialog>
   );
