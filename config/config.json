@@ -21,7 +21,6 @@
     "database": "expensereport_production",
     "host": "127.0.0.1",
     "dialect": "postgres",
-    "port": 5432,
-    "use_env_variable": "DATABASE_URL"
+    "port": 5432
   }
 }
