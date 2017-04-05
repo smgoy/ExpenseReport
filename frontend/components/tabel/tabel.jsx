@@ -158,7 +158,7 @@ class TabelContent extends React.Component {
     if (this.state.tableType === 'employee-expense') {
       return (
         <div className='choose-employee'>
-          <h1>{this.state.chooseEmployeeOpen ? undefined : 'View ' + this.state.employeeUsername + ' Expenses:'}</h1>
+          <h1>{this.state.chooseEmployeeOpen ? undefined : 'View ' + this.state.employeeUsername + '\'s Expenses:'}</h1>
           <RaisedButton label="Change Employee" onClick={this.openChooseEmployee.bind(this)} />
         </div>
       );
